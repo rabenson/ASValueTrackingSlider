@@ -224,6 +224,8 @@
     [formatter setMinimumFractionDigits:2];
     _numberFormatter = formatter;
 
+    _sliderHeight = CGFLOAT_MAX;
+
     self.popUpView = [[ASValuePopUpView alloc] initWithFrame:CGRectZero];
     self.popUpViewColor = [UIColor colorWithHue:0.6 saturation:0.6 brightness:0.5 alpha:0.8];
 
@@ -405,6 +407,16 @@
 {
     [super endTrackingWithTouch:touch withEvent:event];
     if (self.popUpViewAlwaysOn == NO) [self _hidePopUpViewAnimated:YES];
+}
+
+- (CGRect)trackRectForBounds:(CGRect)bounds
+{
+    CGRect newBounds = [super trackRectForBounds:bounds];
+    if (self.sliderHeight != CGFLOAT_MAX) {
+        newBounds.size.height = self.sliderHeight;
+    }
+    
+    return newBounds;
 }
 
 @end
